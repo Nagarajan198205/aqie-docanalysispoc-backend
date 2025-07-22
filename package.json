@@ -8,9 +8,11 @@
     "node": ">=22.16.0"
   },
   "scripts": {
-    "dev": "NODE_ENV=development npm run server:watch",
-    "dev:debug": "NODE_ENV=development npm run server:debug",
-    "docker:dev": "npm run dev",
+    "build": "npm run build:server",
+    "build:server": "NODE_ENV=production babel --delete-dir-on-start --ignore \"**/*.test.js\" --ignore \"**/__fixtures__\" --ignore \"**/test-helpers\" --copy-files --no-copy-ignored --out-dir ./.server ./src",
+    "docker:dev": "NODE_ENV=development npm run server:watch",
+    "dev": "npm run server:watch",
+    "dev:debug": "npm run server:debug",
     "format": "prettier --write \"**/*.{cjs,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{cjs,js,json,md}\"",
     "git:pre-commit-hook": "npm run format:check && npm run lint",
@@ -31,18 +33,21 @@
     "@elastic/ecs-pino-format": "1.5.0",
     "@hapi/boom": "10.0.1",
     "@hapi/hapi": "21.4.0",
+    "@hapi/inert": "7.1.0",
+    "@langchain/community": "^0.3.49",
     "aws-embedded-metrics": "4.2.0",
     "aws4": "1.13.2",
     "convict": "6.2.4",
     "convict-format-with-validator": "6.2.0",
     "global-agent": "3.0.0",
+    "hapi-cors": "1.0.3",
     "hapi-pino": "12.1.0",
     "hapi-pulse": "3.0.1",
     "https-proxy-agent": "7.0.6",
     "joi": "17.13.3",
-    "mongo-locks": "3.0.2",
-    "mongodb": "6.17.0",
+    "langchain": "^0.1.0",
     "node-fetch": "3.3.2",
+    "pdf-parse": "1.1.1",
     "pino": "9.7.0",
     "pino-pretty": "13.0.0",
     "undici": "7.10.0"
@@ -59,7 +64,6 @@
     "npm-run-all": "4.1.5",
     "prettier": "3.5.3",
     "vitest": "3.2.4",
-    "vitest-fetch-mock": "0.4.5",
-    "vitest-mongodb": "1.0.1"
+    "vitest-fetch-mock": "0.4.5"
   }
 }

@@ -1,9 +1,5 @@
 import convict from 'convict'
 import convictFormatWithValidator from 'convict-format-with-validator'
-
-import { convictValidateMongoUri } from './common/helpers/convict/validate-mongo-uri.js'
-
-convict.addFormat(convictValidateMongoUri)
 convict.addFormats(convictFormatWithValidator)
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -76,38 +72,6 @@ const config = convict({
         : ['req', 'res', 'responseTime']
     }
   },
-  mongo: {
-    mongoUrl: {
-      doc: 'URI for mongodb',
-      format: String,
-      default: 'mongodb://127.0.0.1:27017/',
-      env: 'MONGO_URI'
-    },
-    databaseName: {
-      doc: 'database for mongodb',
-      format: String,
-      default: 'aqie-docanalysispoc-backend',
-      env: 'MONGO_DATABASE'
-    },
-    mongoOptions: {
-      retryWrites: {
-        doc: 'enable mongo write retries',
-        format: Boolean,
-        default: false
-      },
-      readPreference: {
-        doc: 'mongo read preference',
-        format: [
-          'primary',
-          'primaryPreferred',
-          'secondary',
-          'secondaryPreferred',
-          'nearest'
-        ],
-        default: 'secondary'
-      }
-    }
-  },
   httpProxy: {
     doc: 'HTTP Proxy URL',
     format: String,
@@ -133,6 +97,41 @@ const config = convict({
       format: String,
       default: 'x-cdp-request-id',
       env: 'TRACING_HEADER'
+    }
+  },
+  openai: {
+    apiKey: {
+      doc: 'OpenAI API Key',
+      format: String,
+      default: '',
+      sensitive: true,
+      env: 'OPEN_AI_KEY'
+    },
+    apiUrl: {
+      doc: 'OpenAI API URL (Azure)',
+      format: String,
+      default: 'https://tradeplatform-ai.openai.azure.com/',
+      env: 'AI_OPEN_API_URL'
+    },
+    model: {
+      doc: 'OpenAI Model to use',
+      format: String,
+      default: 'gpt-4',
+      env: 'OPENAI_MODEL'
+    }
+  },
+  cors: {
+    enabled: {
+      doc: 'Enable CORS',
+      format: Boolean,
+      default: true,
+      env: 'ENABLE_CORS'
+    },
+    origin: {
+      doc: 'CORS allowed origins',
+      format: Array,
+      default: ['*'],
+      env: 'CORS_ORIGIN'
     }
   }
 })
