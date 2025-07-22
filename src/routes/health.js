@@ -4,4 +4,5 @@ const health = {
   handler: (_request, h) => h.response({ message: 'success' })
 }
 
+
 export { health }
